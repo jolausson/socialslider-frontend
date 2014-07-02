@@ -46,6 +46,12 @@ var global = (function ($) {
 
     init: function () {
 
+		this.slider();
+
+
+    },
+    slider: function (){
+		
     }
 
   };
