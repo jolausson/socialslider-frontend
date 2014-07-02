@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<!--[if lt IE 7]><html class="no-js lt-ie9 lt-ie8 lt-ie7"><![endif]-->
+<!--[if IE 7]><html class="no-js lt-ie9 lt-ie8"><![endif]-->
+<!--[if IE 8]><html class="no-js lt-ie9"><![endif]-->
+<!--[if gt IE 8]><!--><html class="no-js"><!--<![endif]-->
+    <head>
+
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+
+        <title>Html Boilerplate</title>
+
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        <link rel="stylesheet" href="css/bootstrap.css">
+        <link rel="stylesheet" href="css/html-boilerplate.css">
+
+        <script src="js/vendor/modernizr.js"></script>
+
+        <!-- Respond.js IE8 support of media queries -->
+        <!--[if lt IE 9]>
+            <script src="js/vendor/respond.js"></script>
+        <![endif]-->
+
+    </head>
+    <body>
+
+        <!-- Put body content here. -->
+        <div id='slider' class='swipe'>
+		  <ul class='swipe-wrap'>
+			
+		  </div>
+		</div>
+
+        <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
+        <script>window.jQuery || document.write('<script src="js/vendor/jquery.js"><\/script>')</script>
+        <script src="js/bootstrap.js"></script>
+        <script src="js/plugins.js"></script>
+        <script src="js/html-boilerplate.js"></script>
+        <script type="text/javascript">
+
+        var items = {
+			intialRender  : 5,
+        	itemsRendered : 0,
+    		itemsAppend   : 5,
+    		itemsFetched  : 0
+        }
+
+    	$.getJSON( "json/images.json", function( data ) {
+    		var preloadCount = 0;
+    		items.itemsFetched = data.length > items.intialRender ? items.intialRender : data.length;
+    		items.itemsRendered = items.itemsFetched;
+
+    		for (var i = 0; i < items.itemsFetched; i++) {
+    			$('#slider ul').append('<li><img src="' + data[i] + '" id="image-' + i +'" alt="image"/></li>' );
+    			$('#image-' + i).load(function(){
+    				preloadCount++;
+    				if(preloadCount === items.itemsFetched - 1) {
+						$('#slider').hide();
+						setTimeout(function() {
+							$('#slider').fadeIn(400);
+							window.mySwipe = new Swipe(document.getElementById('slider'), {
+								speed: 400,
+								auto: 3000,
+								continuous: false,
+								disableScroll: false,
+								stopPropagation: false,
+								callback: function(index, elem) {
+									if (index === (items.itemsRendered - 3) && items.itemsRendered < data.length) {
+										items.itemsAppend = (items.itemsFetched - items.itemsRendered) <= items.itemsAppend ? items.itemsAppend : items.itemsFetched - items.itemsRendered;
+										for (var i = items.itemsRendered; i < (items.itemsRendered + items.itemsAppend); i++) {
+							    			$('#slider ul').append('<li><span class="preloader">Loading..</span><img src="' + data[i] + '" id="image-' + i +'" alt="image"/></li>' );
+							    			$('#image-' + i).load(function(){
+							    				$(this).parent().find('.preloader').hide();
+							    			});
+							    		};
+
+							    		items.itemsRendered += items.itemsAppend;
+							    		window.mySwipe.setup();
+						    		}
+								}
+							});
+							
+						}, 2000);
+
+						$(window).keyup(function(e){
+							if(e.which === 37 || e.which === 91) {
+								window.mySwipe.prev();
+
+							}
+							if (e.which === 39 || e.which === 92) {
+								window.mySwipe.next();
+							}
+						});
+    				}
+    			});
+    		};
+		});
+
+        </script>
+        <style>
+        	.loader {
+        		width: 100%;
+				height: 100%;
+				background: black;
+				position: aboslute;
+				top: 0px;
+				left: 0px;
+        	}
+
+        	.loader span {
+        		display: block;
+        		height: 50px;
+        		line-height: 50px;
+        		width: 200px;
+        		text-align: center;
+        		top: 50%;
+        		margin-top: -25px;
+        		left: 50%;
+				margin-left: -100px;
+				color: #fff;
+        	}
+        	.swipe {
+			  overflow: hidden;
+			  visibility: hidden;
+			  position: relative;
+			}
+			.swipe-wrap {
+			  overflow: hidden;
+			  position: relative;
+			  list-style: none;
+			  padding: 0px;
+			  margin: 0px;
+			}
+			.swipe-wrap > li {
+			  float:left;
+			  width:100%;
+			  position: relative;
+			}
+			.swipe-wrap > li > span {
+				display: block;
+				width: 100%;
+				height: 100%;
+				background: rgba(0,0,0,0.4);
+				color: #fff;
+			}
+        </style>
+
+    </body>
+</html>
+

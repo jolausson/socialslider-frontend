@@ -45,7 +45,7 @@ var global = (function ($) {
   return {
 
     init: function () {
-    	
+
     }
 
   };
