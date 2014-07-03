@@ -43,7 +43,7 @@ body,
   height: 100%;
 }
 body {
-  background: #fbded5;
+  background: #f1f1f1;
 }
 .search-container {
   display: table;
@@ -135,8 +135,8 @@ html.search-active .search-container {
   background: #fc6b61;
   border-radius: 30px;
   -webkit-border-radius: 30px;
-  transition: all 0.3s ease-in-out;
-  -webkit-transition: all 0.3s ease-in-out;
+  transition: all 0.2s cubic-bezier(0, 0.24, 0.08, 0.74);
+  -webkit-transition: all 0.2s cubic-bezier(0, 0.24, 0.08, 0.74);
   position: absolute;
   top: 20px;
   left: 20px;
