@@ -45,7 +45,20 @@ body,
 body {
   background: #fc6b61;
 }
+.absolute {
+  position: absolute;
+  top: 0px;
+  left: 0px;
+  right: 0px;
+  bottom: 0px;
+}
 .search-container {
+  position: absolute;
+  top: 0px;
+  left: 0px;
+  right: 0px;
+  bottom: 0px;
+  z-index: 10;
   display: table;
   width: 100%;
   height: 100%;
@@ -75,6 +88,31 @@ body {
 html.search-active .search-container {
   transform: translate3d(0, 0, 0);
   -webkit-transform: translate3d(0, 0, 0);
+}
+.slider {
+  overflow: hidden;
+  visibility: hidden;
+  position: relative;
+  padding: 0px;
+}
+.slider .slides {
+  overflow: hidden;
+  position: relative;
+  list-style: none;
+  padding: 0px;
+  margin: 0px;
+}
+.slider .slides > li {
+  float: left;
+  width: 100%;
+  position: relative;
+}
+.slider .slides > li .preloader {
+  display: block;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.4);
+  color: #fff;
 }
 .ir {
   background-color: transparent;

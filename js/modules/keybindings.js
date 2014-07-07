@@ -1,8 +1,5 @@
-var searchInput = (function ($) {
+var bindingsModule = (function ($) {
   "use strict";
-
-  var $foo = $('.foo'),
-      $bar = $('.bar');
 
   return {
 
@@ -25,20 +22,45 @@ var searchInput = (function ($) {
           case 83: 
               e.preventDefault();
               $('html').addClass('search-active');
-
+              if(window.slideshow !== undefined) {
+                window.slideshow.stop();
+              }
               break;
 
-          case 27: {
+          case 27: 
               e.preventDefault();
               $('html').removeClass('search-active');
+              if(window.slideshow !== undefined) {
+                window.slideshow.start();
+              }
 
               break;            
-          }
+          case 37:
+            if(window.slideshow !== undefined) {
+              window.slideshow.prev();
+            }
 
+            break;
+
+          case 91:
+            if(window.slideshow !== undefined) {
+              window.slideshow.prev();
+            }
+            break;
+          case 39:
+            if(window.slideshow !== undefined) {
+              window.slideshow.next();
+            }
+            break;
+
+          case 92:
+            if(window.slideshow !== undefined) {
+              window.slideshow.next();
+            }
+            break;
         }
 
       }
-
       // KeyCode for Input
       else {
 
@@ -52,7 +74,7 @@ var searchInput = (function ($) {
           
           case 13:
             if(value.length > 2) {
-              alert('Search');
+              sliderModule.fetchData(value);
             }
         }
 
@@ -63,4 +85,4 @@ var searchInput = (function ($) {
   };
 })(jQuery);
 
-searchInput.init();
+bindingsModule.init();
